@@ -32,4 +32,4 @@ jobs:
           npm install netlify-cli -g
       - name: Deploy to Netlify
         run: |
-         npx netlify deploy --prod --dir=.publish --site ${{ secrets.NETLIFY_SITE_ID}}  --auth ${{ secrets.NETLIFY_API_KEY }} 
+         npx netlify deploy --prod --dir=.publish/wwwroot --site ${{ secrets.NETLIFY_SITE_ID}}  --auth ${{ secrets.NETLIFY_API_KEY }} 
