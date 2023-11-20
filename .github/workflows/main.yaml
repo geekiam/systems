@@ -15,7 +15,7 @@ jobs:
           node-version: 18
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 7.0.x
       - name: Check out Code
@@ -23,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Run the Cake script
-        uses: cake-build/cake-action@v3
+        uses: cake-build/cake-action@v1
         with:
           script-path: build.cake
       - name: Publish generated Blazor webassembly to Netlify
