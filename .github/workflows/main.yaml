@@ -34,4 +34,6 @@ jobs:
         with:
           publish-dir: .publish/wwwroot
           production-branch: main
+          deploy-message: "Deployed from GitHub Actions"
+          enable-commit-comment: true
           
