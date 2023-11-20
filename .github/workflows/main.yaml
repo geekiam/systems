@@ -1,4 +1,4 @@
-name: systems-deployment
+name: sample-deployment
 on:
   push:
     branches:
@@ -10,26 +10,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.x
       - name: Check out Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Run cake
-        shell : bash
+      - name: Run the Cake script
+        uses: cake-build/cake-action@v3
+        with:
+          script-path: build.cake
+      - name: Publish generated Blazor webassembly to Netlify
+        uses: nwtgck/actions-netlify@v2.0
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          dotnet new tool-manifest
-          dotnet tool install Cake.Tool
-          dotnet tool restore
-          dotnet cake ./build.cake 
-      - name: Install Netlify CLI
-        run: |
-          npm install netlify-cli -g
-      - name: Deploy to Netlify
-        run: |
-         npx netlify deploy --prod --dir=.publish/wwwroot --site ${{ secrets.NETLIFY_SITE_ID}}  --auth ${{ secrets.NETLIFY_API_KEY }} 
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_API_KEY }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        with:
+          publish-dir: .publish/wwwroot
+          production-branch: main
+          

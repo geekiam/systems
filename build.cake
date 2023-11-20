@@ -2,12 +2,6 @@
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 string version = String.Empty;
-
-string projectTag = "FeedManagement";
-string rootNamespace = "Geekiam";
-
-string packageName = string.Empty;
-string containerRegistry = EnvironmentVariable("CONTAINER_REGISTRY");
 //////////////////////////////////////////////////////////////////////
 // TASKS
 //////////////////////////////////////////////////////////////////////
